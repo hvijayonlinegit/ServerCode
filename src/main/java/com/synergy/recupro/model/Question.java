@@ -1,4 +1,4 @@
-package com.example.postgresdemo.model;
+package com.synergy.recupro.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

@@ -1,4 +1,4 @@
-package com.example.postgresdemo.model;
+package com.synergy.recupro.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;

@@ -1,8 +1,10 @@
-package com.example.postgresdemo.repository;
+package com.synergy.recupro.repository;
 
-import com.example.postgresdemo.model.Answer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.synergy.recupro.model.Answer;
+
 import java.util.List;
 
 @Repository

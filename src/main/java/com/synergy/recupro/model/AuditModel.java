@@ -1,4 +1,4 @@
-package com.example.postgresdemo.model;
+package com.synergy.recupro.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
