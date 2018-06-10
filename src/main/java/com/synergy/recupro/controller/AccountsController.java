@@ -33,7 +33,7 @@ public class AccountsController {
         return AccountsRepository.findAll();
     }
 
-
+    @CrossOrigin(origins = "*")
     @PostMapping("/accounts")
     public Accounts createAccount(@Valid @RequestBody Accounts accounts) {
         return AccountsRepository.save(accounts);
