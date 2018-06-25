@@ -3,8 +3,8 @@ package com.synergy.recupro.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.synergy.recupro.model.Question;
+import com.synergy.recupro.model.ImageModel;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Long> {
+public interface ImageModelRepository extends JpaRepository<ImageModel, Long> {
 }

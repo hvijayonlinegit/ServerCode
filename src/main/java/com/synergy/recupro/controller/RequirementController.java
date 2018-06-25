@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +29,17 @@ public class RequirementController {
     @Autowired
     private AccountsRepository accountsRepository;
 
+    @CrossOrigin(origins = "*")
+    @GetMapping("/requirements")
+    public List<Requirements> getAccounts() {
+        return requirementRepository.findAll();
+    }
+    
     @GetMapping("/accounts/{accountsId}/requitements")
     public List<Requirements> getRquirementsByAccountsId(@PathVariable Long accountsId) {
         return requirementRepository.findByAccountsId(accountsId);
     }
-
+    @CrossOrigin(origins = "*")
     @PostMapping("/accounts/{accountsId}/requitements")
     public Requirements addRequirements(@PathVariable Long accountsId,
                             @Valid @RequestBody Requirements requirement) {
@@ -40,7 +47,7 @@ public class RequirementController {
                 .map(accounts -> {
                     requirement.setAccounts(accounts);
                     return requirementRepository.save(requirement);
-                }).orElseThrow(() -> new ResourceNotFoundException("Account not found with id " + accountsId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + accountsId));
     }
 
     @PutMapping("/accounts/{accountsId}/requitements/{reqId}")
@@ -48,28 +55,28 @@ public class RequirementController {
                                @PathVariable Long reqId,
                                @Valid @RequestBody Requirements requirementRequest) {
         if(!accountsRepository.existsById(accountsId)) {
-            throw new ResourceNotFoundException("Account not found with id " + accountsId);
+            throw new ResourceNotFoundException("Question not found with id " + accountsId);
         }
 
         return requirementRepository.findById(reqId)
                 .map(requirements -> {
-               	requirements.setReq_description(requirementRequest.getReq_description());
+               	requirements.setDescription(requirementRequest.getDescription());
                     return requirementRepository.save(requirements);
-                }).orElseThrow(() -> new ResourceNotFoundException("requirement not found with id " + reqId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + reqId));
     }
 
     @DeleteMapping("/accounts/{accountsId}/requitements/{reqId}")
     public ResponseEntity<?> deleteRequirement(@PathVariable Long accountsId,
                                           @PathVariable Long reqId) {
         if(!accountsRepository.existsById(accountsId)) {
-            throw new ResourceNotFoundException("Account not found with id " + accountsId);
+            throw new ResourceNotFoundException("Question not found with id " + accountsId);
         }
 
         return requirementRepository.findById(reqId)
                 .map(requirements -> {
                     requirementRepository.delete(requirements);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("requirement not found with id " + reqId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Answer not found with id " + reqId));
 
     }
 }

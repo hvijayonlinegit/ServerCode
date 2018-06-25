@@ -1,11 +1,14 @@
 package com.synergy.recupro.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -14,6 +17,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "requirements")
@@ -28,17 +32,20 @@ public class Requirements extends AuditModel {
     )
     private Long id;
     @Column(columnDefinition = "text")
-    private String req_title;
+    private String title;
     @Column(columnDefinition = "text")
-    private String req_description;
+    private String description;
     @Column(columnDefinition = "text")
     private String rate;
+    
     @Column(columnDefinition = "text")
-    private String req_type;
+    private String primary_skills;
     @Column(columnDefinition = "text")
     private String secondary_skills;
     @Column(columnDefinition = "text")
     private String seniority_level;
+    @Column(columnDefinition = "text")
+    private String type;
     @Column(columnDefinition = "text")
     private String pay_rate;
     @Column(columnDefinition = "text")
@@ -49,71 +56,31 @@ public class Requirements extends AuditModel {
     private String recruiter_name;
     @Column(columnDefinition = "text")
     private String account_manager;
-    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "account_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Accounts accounts;
-	public Accounts getAccounts() {
-		return accounts;
-	}
-	public void setAccounts(Accounts accounts) {
-		this.accounts = accounts;
-	}
+    @ManyToMany(mappedBy="requirements")
+    @JsonIgnoreProperties("requirements")
+    private List<Candidate> candidates ;
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getText() {
-		return req_title;
+	public String getTitle() {
+		return title;
 	}
-	public void setText(String text) {
-		this.req_title = text;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getAccount_name() {
-		return req_title;
+	public String getDescription() {
+		return description;
 	}
-	public void setAccount_name(String account_name) {
-		this.req_title = account_name;
-	}
-	public String getAccount_type() {
-		return req_description;
-	}
-	public void setAccount_type(String account_type) {
-		this.req_description = account_type;
-	}
-	public String getAccount_address() {
-		return rate;
-	}
-	public void setAccount_address(String account_address) {
-		this.rate = account_address;
-	}
-	public String getAccount_phone() {
-		return req_type;
-	}
-	public void setAccount_phone(String account_phone) {
-		this.req_type = account_phone;
-	}
-	public Long getReq_id() {
-		return id;
-	}
-	public void setReq_id(Long req_id) {
-		this.id = req_id;
-	}
-	public String getReq_title() {
-		return req_title;
-	}
-	public void setReq_title(String req_title) {
-		this.req_title = req_title;
-	}
-	public String getReq_description() {
-		return req_description;
-	}
-	public void setReq_description(String req_description) {
-		this.req_description = req_description;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public String getRate() {
 		return rate;
@@ -121,11 +88,11 @@ public class Requirements extends AuditModel {
 	public void setRate(String rate) {
 		this.rate = rate;
 	}
-	public String getReq_type() {
-		return req_type;
+	public String getPrimary_skills() {
+		return primary_skills;
 	}
-	public void setReq_type(String req_type) {
-		this.req_type = req_type;
+	public void setPrimary_skills(String primary_skills) {
+		this.primary_skills = primary_skills;
 	}
 	public String getSecondary_skills() {
 		return secondary_skills;
@@ -138,6 +105,12 @@ public class Requirements extends AuditModel {
 	}
 	public void setSeniority_level(String seniority_level) {
 		this.seniority_level = seniority_level;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getPay_rate() {
 		return pay_rate;
@@ -168,6 +141,18 @@ public class Requirements extends AuditModel {
 	}
 	public void setAccount_manager(String account_manager) {
 		this.account_manager = account_manager;
+	}
+	public Accounts getAccounts() {
+		return accounts;
+	}
+	public void setAccounts(Accounts accounts) {
+		this.accounts = accounts;
+	}
+	public List<Candidate> getCandidates() {
+		return candidates;
+	}
+	public void setCandidates(List<Candidate> candidates) {
+		this.candidates = candidates;
 	}
 	
 }
